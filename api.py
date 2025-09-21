@@ -1,33 +1,30 @@
-from flask import Flask, render_template, redirect, url_for, request
-# from flask_sqlalchemy import SQLAlchemy
-# from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort
+from flask import Flask, redirect, url_for, render_template, request
+
+
 
 app = Flask(__name__)
-# api = Api(app)
-# GET -- what i want from the browser when visiting
 
-@app.route('/', methods=['GET', 'POST'])
+app.route('/', Method = ['GET','POST'])
 def home():
     if request.method == 'POST':
-        answer = request.form.get('numbers')
-        return redirect(url_for('calculate', calculator_input=answer))
+       type_input = request.form.get('numbers')
+       redirect('calculate', calculator_input=type_input)
     else:
-        return render_template("index.html")
+        render_template('index_html')
 
-# PUT -- what i want to input to browser
 
-@app.route('/calculate')
+app.route('/calculate', Method=['POST'])
 def calculate():
-    calculator_input = request.args.get('calculator_input')
+    calculator_input = request.args.get("calculator_input")
     try:
-        final = eval(calculator_input)
-
+        final =  eval(calculator_input)
+        
     except Exception:
-        final = "Please type numbers only."
-    
-    
-    return render_template("result.html",final=final) 
+        final = "Please type numbers only"
+
+    return render_template('result.html', final = final)
+
 
 
 if __name__ == "__main__":
-    app.run(debug=True) 
+    app.run(debug=True)
