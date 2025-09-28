@@ -4,16 +4,16 @@ from flask import Flask, redirect, url_for, render_template, request
 
 app = Flask(__name__)
 
-app.route('/', Method = ['GET','POST'])
+@app.route('/', methods = ['GET','POST'])
 def home():
     if request.method == 'POST':
        type_input = request.form.get('numbers')
-       redirect('calculate', calculator_input=type_input)
+       return redirect(url_for('calculate', calculator_input=type_input))
     else:
-        render_template('index_html')
+       return render_template('index.html')
 
 
-app.route('/calculate', Method=['POST'])
+@app.route('/calculate')
 def calculate():
     calculator_input = request.args.get("calculator_input")
     try:
